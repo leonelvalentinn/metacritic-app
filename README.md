@@ -43,3 +43,9 @@ Para el enrutado cambiar el punto de entrada en el package por 'main': 'expo-rou
 Para utilizar los linking neceitamos declarar en el app.json los scheme, que son los nombres de las apps
 
 para el enrutador neceitamos tener la carptea app y en principio el _layout.
+
+Icons
+
+```
+npm install  @tabler/icons-react-native
+```

@@ -1,28 +1,20 @@
-import { useEffect, useState } from 'react'
-import { View, ActivityIndicator, FlatList } from 'react-native'
+import { useEffect, useRef, useState } from 'react'
+import { ActivityIndicator, FlatList, Pressable } from 'react-native'
 import { getLatestGames } from '../lib/metacritic'
-import { useSafeAreaInsets } from 'react-native-safe-area-context' 
 import { AnimatedGameCard } from './GameCard'
-import { Logo } from './Logo'
-import { Link } from 'expo-router'
+import { ScreenLayout } from './ScreenLayout'
 
 export default function Main() {
   const [games, setGames] = useState([])
-  const insets = useSafeAreaInsets()
+  const [offset, setOffset] = useState(0)
 
   useEffect(() => {
-    getLatestGames().then((games) => {
+    getLatestGames(offset).then((games) => {
       setGames(games)
     })
-  }, [])
+  }, [offset])
   return (
-    <View style={{ paddingTop: insets.top, paddingBottom: insets.bottom }}>
-      <View style={{ marginVertical: 10 }}>
-        <Logo />
-      </View>
-      <Link href='/about' className='text-blue-500 text-xl'>
-        About
-      </Link>
+    <ScreenLayout>
       {
         games.length === 0 ? (
           <ActivityIndicator color={'#fff'} size={'large'} />
@@ -31,8 +23,9 @@ export default function Main() {
             data={games}
             keyExtractor={game => game.slug}
             renderItem={({ item, index }) => <AnimatedGameCard game={item} index={index} />}
+            ListFooterComponent={() => <Pressable onPress={() => setOffset((oldOffset) => {})}>Cargar mas</Pressable>}
           />
       )}
-    </View>
+    </ScreenLayout>
   );
 }
