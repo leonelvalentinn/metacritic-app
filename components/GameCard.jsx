@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { memo } from 'react'
 import { Animated, Image, Pressable, StyleSheet, Text, View } from 'react-native'
 import { Score } from './Score'
 import { Link } from 'expo-router'
@@ -27,24 +27,17 @@ export const GameCard = ({ game }) => {
   )
 }
 
-export const AnimatedGameCard = ({ game, index }) => {
-  const opacity = useRef(new Animated.Value(0)).current
-  
-  useEffect(() => {
-    Animated.timing(opacity, {
-      toValue: 1,
-      duration: 1000,
-      delay: index * 250,
-      useNativeDriver: true
-    }).start()
-  }, [opacity, index])
-
-  return (
-    <Animated.View style={{ opacity }}>
+const AnimatedGameCard = memo(
+  ({ game, index }) => (
+    console.log('render', index),
+    <Animated.View>
       <GameCard game={game} />
     </Animated.View>
-  )
-}
+  ), 
+  (prevProps, nextProps) => {
+    return prevProps.game.slug === nextProps.game.slug
+  }
+)
 
 const styles = StyleSheet.create({
   card: {
@@ -71,3 +64,7 @@ const styles = StyleSheet.create({
     color: 'green'
   }
 })
+
+AnimatedGameCard.displayName = 'AnimatedGameCard'
+
+export default AnimatedGameCard

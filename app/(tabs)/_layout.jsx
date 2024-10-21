@@ -1,5 +1,5 @@
-import { IconHome, IconInfoCircle } from "@tabler/icons-react-native";
-import { Tabs } from "expo-router";
+import { IconHome, IconInfoCircle } from '@tabler/icons-react-native'
+import { Tabs } from 'expo-router'
 
 export default function TabsLayput() {
   return (

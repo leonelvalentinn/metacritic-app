@@ -14,7 +14,7 @@ export default function Detail() {
     if (id) {
       getGameDetails(id).then(setGameInfo)
     }
-  }, [])
+  }, [id])
   return (
     <ScreenLayout>
       <Stack.Screen
